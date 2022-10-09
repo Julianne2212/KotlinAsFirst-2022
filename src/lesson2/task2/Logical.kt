@@ -3,6 +3,7 @@
 package lesson2.task2
 
 import lesson1.task1.sqr
+import java.lang.Math.sqrt
 
 /**
  * Пример
@@ -18,7 +19,16 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  * Четырехзначное число назовем счастливым, если сумма первых двух ее цифр равна сумме двух последних.
  * Определить, счастливое ли заданное число, вернуть true, если это так.
  */
-fun isNumberHappy(number: Int): Boolean = TODO()
+fun isNumberHappy(number: Int): Boolean {
+    val x1 = number / 1000
+    val x2 = (number / 100) % 10
+    val x3 = (number % 100) / 10
+    val x4 = number % 10
+    return when {
+        x1 + x2 == x3 + x4 -> true
+        else -> false
+    }
+}
 
 /**
  * Простая (2 балла)
@@ -27,7 +37,10 @@ fun isNumberHappy(number: Int): Boolean = TODO()
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = TODO()
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = when {
+    (x1 == x2 || y1 == y2 || x1 + y1 == x2 + y2 || x1 - y1 == x2 - y2) -> true
+    else -> false
+}
 
 
 /**
@@ -48,7 +61,10 @@ fun daysInMonth(month: Int, year: Int): Int = TODO()
 fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
-): Boolean = TODO()
+): Boolean = when {
+    (sqrt(sqr(x2 - x1) + sqr(y2 - y1))) <= r2 - r1 -> true
+    else -> false
+}
 
 /**
  * Средняя (3 балла)
@@ -59,4 +75,17 @@ fun circleInside(
  * кирпич 4 х 4 х 4 пройдёт через отверстие 4 х 4.
  * Вернуть true, если кирпич пройдёт
  */
-fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean = TODO()
+fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
+    return when {
+        ((a <= r && b <= s) || (a <= s && b <= r)) -> true
+        ((a <= r && c <= s) || (a <= s && c <= r)) -> true
+        ((b <= r && c <= s) || (b <= s && c <= r)) -> true
+        else -> false
+    }
+
+}
+/** Также работает код и поменьше, при других тестах тоже выдат правильные ответы, но с точки зрения логики не совсем
+ * верен {return when {
+(a * b <= r * s) || (b * c <= r * s) || (a * c <= r * s) -> true
+else -> false
+ */
