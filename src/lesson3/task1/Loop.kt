@@ -91,20 +91,7 @@ fun digitNumber(n: Int): Int {
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int {
-    var a = 1
-    var b = 1
-    var c = 0
-    var count = 0
-    if (n == 1 || n == 2) return 1
-    do {
-        c = b + a
-        a = b
-        b = c
-        count++
-    } while (count == n)
-    return count
-}
+fun fib(n: Int): Int = (Math.pow(((Math.sqrt(5.0) + 1) / 2), n.toDouble()) / Math.sqrt(5.0) + 0.5).toInt()
 
 /**
  * Простая (2 балла)
@@ -150,15 +137,14 @@ fun maxDivisor(n: Int): Int {
  * этого для какого-либо начального X > 0.
  */
 fun collatzSteps(x: Int): Int {
-    var x = Math.abs(x)
     var n = 0
     var step = 0
     if (x == 1) return 0
-    do {
+    while (x != 1) {
         if (x / 2 == 0) n = x / 2
         else n = 3 * x + 1
         step++
-    } while (x != 1)
+    }
     return step
 
 
@@ -171,16 +157,14 @@ fun collatzSteps(x: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int {
-    var k = 0
     var x1 = m
     var x2 = n
     var a = 0
-    do {
+    while (x1 != x2) {
         if (x1 > x2) x1 = x1 - x2
         else x2 = x2 - x1
-        k = x1
-    } while (x1 != x2)
-    a = ((m * n) / k)
+    }
+    a = ((m * n) / x1)
     return a
 }
 
@@ -200,7 +184,15 @@ fun isCoPrime(m: Int, n: Int): Boolean = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var x1 = 0
+    var x2 = n
+    while (x2 >= 1) {
+        x1 = x1 * 10 + (x2 % 10)
+        x2 /= 10
+    }
+    return x1
+}
 
 /**
  * Средняя (3 балла)

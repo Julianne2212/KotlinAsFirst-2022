@@ -70,19 +70,11 @@ fun minBiRoot(a: Double, b: Double, c: Double): Double {
  * вернуть строку вида: «21 год», «32 года», «12 лет».
  */
 fun ageDescription(age: Int): String {
-    val x1 = "год"
-    val x2 = "года"
-    val x3 = "лет"
     return when {
-        age == 0 || age == 9 || age == 10 || age == 11 || age == 12 || age == 13 || age == 14
-                || age == 15 || age == 16 || age == 17 || age == 18 || age == 19 || age == 20
-                || age == 111 -> "$age $x3"
-
-        age % 10 == 1 || age == 1 -> "$age $x1"
-        age % 10 == 2 || age % 10 == 3 || age % 10 == 4 -> "$age $x2"
-        age == 2 || age == 3 || age == 4 || age == 5 || age == 6 || age == 7 || age == 8 -> "$age$x2"
-
-        else -> "$age $x3"
+        age / 10 % 10 == 1 -> "$age лет"
+        age % 10 == 1 -> "$age год"
+        age / 10 % 10 == 9 -> "$age лет"
+        else -> "$age года"
     }
 }
 
@@ -151,7 +143,7 @@ fun rookOrBishopThreatens(
     var rook1 = 0
     var bishop1 = 0
     if (kingX == rookX || kingY == rookY) rook1 = 1
-    if (kingX == bishopX && kingY == bishopY) bishop1 = 2
+    if ((bishopX - bishopY == kingX - kingY) || (bishopX + bishopY == kingX + kingY)) bishop1 = 2
     return when {
         rook1 == 1 && bishop1 == 2 -> 3
         rook1 == 1 && bishop1 != 2 -> 1
@@ -169,24 +161,24 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun triangleKind(a: Double, b: Double, c: Double): Int {
-    var storona = 0.0
-    var sum = 0.0
+    var d = 0.0
+    var s = 0.0
     if ((a > b + c) || (b > a + c) || (c > a + b))
         return -1
     if (a > b && a > c) {
-        storona = a * a
-        sum = b * b + c * c
+        d = a * a
+        s = b * b + c * c
     } else if (b > a && b > c) {
-        storona = b * b
-        sum = a * a + c * c
+        d = b * b
+        s = a * a + c * c
     } else {
-        storona = c * c
-        sum = b * b + a * a
+        d = c * c
+        s = b * b + a * a
     }
     return when {
-        storona == sum -> 1
-        storona > sum -> 2
-        storona < sum -> 0
+        d == s -> 1
+        d > s -> 2
+        d < s -> 0
         else -> -1
     }
 }
@@ -199,12 +191,12 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  * Найти длину пересечения отрезков AB и CD.
  * Если пересечения нет, вернуть -1.
  */
-fun segmentLength(a: Int, b: Int, c: Int, d: Int) = when{
-     (a > d || c > b) -> -1
-     (a >= c && b <= d) -> b-a
-     (a < c && b <= d && c <= b) -> b-c
-     (a <= c && a <= d && d <= b) -> d-c
-    else -> d-a
+fun segmentLength(a: Int, b: Int, c: Int, d: Int) = when {
+    (a > d || c > b) -> -1
+    (a >= c && b <= d) -> b - a
+    (a < c && b <= d && c <= b) -> b - c
+    (a <= c && a <= d && d <= b) -> d - c
+    else -> d - a
 
 
 }

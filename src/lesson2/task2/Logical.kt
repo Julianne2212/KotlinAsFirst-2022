@@ -24,10 +24,7 @@ fun isNumberHappy(number: Int): Boolean {
     val x2 = (number / 100) % 10
     val x3 = (number % 100) / 10
     val x4 = number % 10
-    return when {
-        x1 + x2 == x3 + x4 -> true
-        else -> false
-    }
+    return (x1 + x2 == x3 + x4)
 }
 
 /**
@@ -37,10 +34,8 @@ fun isNumberHappy(number: Int): Boolean {
  * Определить, угрожают ли они друг другу. Вернуть true, если угрожают.
  * Считать, что ферзи не могут загораживать друг друга.
  */
-fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean = when {
-    (x1 == x2 || y1 == y2 || x1 + y1 == x2 + y2 || x1 - y1 == x2 - y2) -> true
-    else -> false
-}
+fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean =
+    (x1 == x2 || y1 == y2 || x1 + y1 == x2 + y2 || x1 - y1 == x2 - y2)
 
 
 /**
@@ -84,8 +79,3 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     }
 
 }
-/** Также работает код и поменьше, при других тестах тоже выдат правильные ответы, но с точки зрения логики не совсем
- * верен {return when {
-(a * b <= r * s) || (b * c <= r * s) || (a * c <= r * s) -> true
-else -> false
- */
