@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -74,7 +76,38 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val d: Int
+    val m: Int
+    val y: Int
+    val parts = str.split(" ")
+    if (parts.size > 3 || parts.size < 3) return ""
+    try {
+        d = parts[0].toInt()
+        m = when (parts[1]) {
+            "января" -> 1
+            "февраля" -> 2
+            "марта" -> 3
+            "апреля" -> 4
+            "мая" -> 5
+            "июня" -> 6
+            "июля" -> 7
+            "августа" -> 8
+            "сентября" -> 9
+            "октября" -> 10
+            "ноября" -> 11
+            "декабря" -> 12
+            else -> throw NumberFormatException("error404")
+        }
+        y = parts[2].toInt()
+    } catch (e: NumberFormatException) {
+        return ""
+    }
+    if (d < 0 || d > 31) return ""
+    if (d > daysInMonth(m, y)) return ""
+    return String.format("%02d.%02d.%d", d, m, y)
+}
+
 
 /**
  * Средняя (4 балла)
@@ -162,7 +195,25 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    if (!Regex("""\S+ \d+(\.\d+)?(; \S+ \d+(\.\d+)?)*""")
+            .matches(description)
+    ) {
+        return ""
+    }
+    val a = description.split("; ")
+    var maxCost = -1.0
+    var name = ""
+    for (i in a) {
+        if (i == "") return ""
+        val productList = i.split(" ")
+        if (productList[1].toDouble() > maxCost) {
+            maxCost = productList[1].toDouble()
+            name = productList[0]
+        }
+    }
+    return name
+}
 
 /**
  * Сложная (6 баллов)
