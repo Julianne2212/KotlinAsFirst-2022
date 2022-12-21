@@ -120,8 +120,32 @@ fun counter(message: String, string: String): Int {
  *
  */
 fun sibilants(inputName: String, outputName: String) {
-    TODO()
+    val letter = setOf('щ', 'ш', 'ч', 'ж')
+    val error = mapOf('ю' to "у", 'я' to "а", 'ы' to "и")
+    File(outputName).bufferedWriter().use {
+        for (line in File(inputName).readLines()) {
+            it.write(line[0].toString())
+            for (i in 1 until line.length)
+                if ((line[i].toLowerCase() in error.keys) && (line[i - 1].toLowerCase() in letter)) {
+                    it.write(
+                        error.getOrDefault(
+                            line[i],
+                            error.getOrDefault(line[i].toLowerCase(), "").toUpperCase()
+                        )
+                    )
+                } else it.write(line[i].toString())
+            it.newLine()
+        }
+        it.close()
+    }
 }
+/** Также можно сделать похожее решение без введения it, но с немного измененным алгоритмом решения, где мы делаем
+ * отдельную переменную под текст и результат
+ * (val text = File(outputName).bufferedWriter(), после чего расписываем алгоритм замены
+ * который не сильно отличается от текущего но имеет но имеет укороченный вид с большим количеством переменных.
+ * Какое из этих двух решений будет более рациональным?
+ */
+
 
 /**
  * Средняя (15 баллов)
