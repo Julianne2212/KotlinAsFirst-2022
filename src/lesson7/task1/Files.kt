@@ -146,7 +146,6 @@ fun sibilants(inputName: String, outputName: String) {
  * Какое из этих двух решений будет более рациональным?
  */
 
-
 /**
  * Средняя (15 баллов)
  *

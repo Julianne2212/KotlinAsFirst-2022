@@ -148,7 +148,6 @@ fun collatzSteps(x: Int): Int {
     return step
 }
 
-
 /**
  * Средняя (3 балла)
  *
